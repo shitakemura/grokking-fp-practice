@@ -1,0 +1,16 @@
+{
+  "name": "scala-cli",
+  "argv": [
+    "/Users/shitakemura/Library/Application Support/Coursier/bin/.scala-cli.aux",
+    "bsp",
+    "--json-options",
+    "/Users/shitakemura/study/grokking-fp-practice/.scala-build/ide-options-v2.json",
+    "/Users/shitakemura/study/grokking-fp-practice"
+  ],
+  "version": "1.0.2",
+  "bspVersion": "2.1.0-M3",
+  "languages": [
+    "scala",
+    "java"
+  ]
+}
