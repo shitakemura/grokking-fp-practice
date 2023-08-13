@@ -38,3 +38,18 @@
 // def numberOfS(word: String): Int = word.length - word.replaceAll("s", "").length
 // def containsS(moreThan: Int): String => Boolean = word => numberOfS(word) >= moreThan
 // List("rust", "ada").filter(containsS(2))
+
+// def cumulativeScore(wordScore: String => Int, words: List[String]): Int = {
+//     words.foldLeft(0) ((total, word) => total + wordScore(word))
+// }
+
+// cumulativeScore(w => score(w) + bonus(w) - penalty(w), List("rust", "java"))
+
+// 4.51
+// List(5, 1, 2, 4, 100).foldLeft(0) ((total, num) => total + num)
+
+// List("scala", "rust", "ada").foldLeft(0) ((total, word) => total + word.length)
+
+// List("scala", "haskell", "rust", "ada").foldLeft(0) ((total, word) => total + word.length - word.replaceAll("s", "").length)
+
+// List(5, 1, 2, 4, 15).foldLeft(Int.MinValue) ((max, num) => if (num > max) num else max)
