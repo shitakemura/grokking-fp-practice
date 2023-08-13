@@ -53,3 +53,17 @@
 // List("scala", "haskell", "rust", "ada").foldLeft(0) ((total, word) => total + word.length - word.replaceAll("s", "").length)
 
 // List(5, 1, 2, 4, 15).foldLeft(Int.MinValue) ((max, num) => if (num > max) num else max)
+
+// 4.57
+
+// case class ProgrammingLanguage(name: String, year: Int)
+
+// val javalang = ProgrammingLanguage("Java", 1995)
+// val scalalang = ProgrammingLanguage("scala", 2004)
+// val languages = List(javalang, scalalang)
+
+// languages.map(lang => lang.name)
+// languages.filter(lang => lang.year > 2000)
+
+// languages.map(_.name)
+// languages.filter(_.year > 2000)
