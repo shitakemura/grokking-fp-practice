@@ -88,5 +88,31 @@
 // }
 
 // def recommendationFeed(books: List[Book]): List[String] = {
-//     books.flatMap(_.authors).map(bookAdaptions)
+//     books.flatMap(_.authors).flatMap(bookAdaptions)
 // }
+
+// 5.7
+
+// case class Book(title: String, authors: List[String])
+
+// def recommendedBooks(friend: String): List[Book] = {
+//     val scala = List(
+//         Book("FP in Scala", List("Chiusano", "Bjarnason")),
+//         Book("Get Programming with Scala", List("Sfregola"))
+//     )
+
+//     val fiction = List(
+//         Book("Harry Potter", List("Rowling")),
+//         Book("The Load of the Rings", List("Tolkien"))
+//     )
+
+//     if (friend == "Alice") scala
+//     else if (friend == "Bob") fiction
+//     else List.empty
+// }
+
+// val friends = List("Alice", "Bob", "Charlie")
+
+// val recommendations = friends.flatMap(recommendedBooks)
+
+// val authors = recommendations.flatMap(_.authors)
