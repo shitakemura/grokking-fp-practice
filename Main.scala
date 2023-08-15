@@ -146,17 +146,53 @@
 // }
 
 // 5.12
-case class Point(x: Int, y: Int)
+// case class Point(x: Int, y: Int)
 
-List(1).flatMap(x =>
-    List(-2, 7).map(y =>
-        Point(x, y)
-    )
-)
+// List(1).flatMap(x =>
+//     List(-2, 7).map(y =>
+//         Point(x, y)
+//     )
+// )
 
 // 5.14
+// for {
+//     book <- books
+//     author <- book.authors
+//     movie <- bookAdaptations(author)
+// } yield s"You may like ${movie.title}, " + s"because you liked $author's ${book.title}"
+
+case class Point(x: Int, y: Int)
+
+// val xs = List(1)
+// val ys = List(-2, 7)
+
+// xs.flatMap(x =>
+//     ys.map(y =>
+//         Point(x, y)
+//     )
+// )
+
+// for {
+//     x <- xs
+//     y <- ys
+// } yield Point(x, y)
+
+case class Point3d(x: Int, y: Int, z: Int)
+
+val xs = List(1)
+val ys = List(-2, 7)
+val zs = List(3, 4)
+
 for {
-    book <- books
-    author <- book.authors
-    movie <- bookAdaptations(author)
-} yield s"You may like ${movie.title}, " + s"because you liked $author's ${book.title}"
+    x <- xs
+    y <- ys
+    z <- zs
+} yield Point3d(x, y, z)
+
+xs.flatMap(x =>
+    ys.flatMap(y =>
+        zs.map(z =>
+            Point3d(x, y, z)
+        )
+    )
+)
