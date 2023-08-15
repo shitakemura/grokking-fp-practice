@@ -119,28 +119,44 @@
 
 // 5.9
 
-case class Book(title: String, authors: List[String])
-val books = List(
-    Book("FP in Scala", List("Chiusano", "Bjarnason")),
-    Book("The Hobbit", List("Tolkien"))
+// case class Book(title: String, authors: List[String])
+// val books = List(
+//     Book("FP in Scala", List("Chiusano", "Bjarnason")),
+//     Book("The Hobbit", List("Tolkien"))
+// )
+
+// case class Movie(title: String)
+
+// def bookAdaptations(author: String): List[Movie] = {
+//     if (author == "Tolkien") List(Movie("An Unexpected Journey"), Movie("The Desolation of Smaug"))
+//     else List.empty
+// }
+
+// val movies = books.flatMap(_authors).flatMap(bookAdaptations)
+
+// def recommendationFeed(books: List[Book]) = {
+//     books.flatMap(book =>
+//         book.authors.flatMap(author =>
+//             bookAdaptations(author).map(movie =>
+//                 s"You may like ${movie.title}, " +
+//                 s"because your liked $author's ${book.title}"
+//             )
+//         )
+//     )
+// }
+
+// 5.12
+case class Point(x: Int, y: Int)
+
+List(1).flatMap(x =>
+    List(-2, 7).map(y =>
+        Point(x, y)
+    )
 )
 
-case class Movie(title: String)
-
-def bookAdaptations(author: String): List[Movie] = {
-    if (author == "Tolkien") List(Movie("An Unexpected Journey"), Movie("The Desolation of Smaug"))
-    else List.empty
-}
-
-val movies = books.flatMap(_authors).flatMap(bookAdaptations)
-
-def recommendationFeed(books: List[Book]) = {
-    books.flatMap(book =>
-        book.authors.flatMap(author =>
-            bookAdaptations(author).map(movie =>
-                s"You may like ${movie.title}, " +
-                s"because your liked $author's ${book.title}"
-            )
-        )
-    )
-}
+// 5.14
+for {
+    book <- books
+    author <- book.authors
+    movie <- bookAdaptations(author)
+} yield s"You may like ${movie.title}, " + s"because you liked $author's ${book.title}"
