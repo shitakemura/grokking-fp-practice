@@ -283,3 +283,20 @@ for {
     point <- points
     inPoint <- insideFilter(point, validateRadius)
 } yield s"$point is within a radius of $r"
+
+// 5.27
+
+for {
+    greeting <- Set("Hello", "Hi there")
+    name <- Set("Alice", "Bob")
+} yield s"$greeting, $name!"
+
+for {
+    a <- List(1, 2)
+    b <- Set(2, 1)
+} yield a * b
+
+for {
+    a <- Set(1, 2)
+    b <- List(2, 1)
+} yield a * b
