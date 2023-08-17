@@ -341,3 +341,21 @@ def parse(name: String, start: Int, end: Int): Option[Event] = {
 
 parse("Apollo Program", 1961, 1972)
 parse("", 1939, 1945)
+
+def validateLength(start: Int, end: Int, minLength: Int): Option[Int] = {
+    if (end - start >= minLength) Some(end - start) else None
+}
+
+def parseLongEvent(name: String, start: Int, end: Int, minLength: Int): Option[Event] = {
+    for {
+        validName <- validateName(name)
+        validEnd <- validateEnd(end)
+        validStart <- validateStart(start, end)
+        validLength <- validateLength(start, end, minLength)
+    } yield Event(validName, validStart, validEnd)
+}
+
+parseLongEvent("Apollo Program", 1961, 1972, 10)
+parseLongEvent("World War 2", 1939, 1945, 10)
+parseLongEvent("", 1939, 1945, 10)
+parseLongEvent("Apollo Program", 1972, 1961, 10)
