@@ -42,3 +42,21 @@ def parseShow(rawShow: String): TvShow = {
 parseShow("Breaking Bad (2008-1013)")
 
 parseShows(rawShows)
+
+val invalidRawShow = "Breaking Bad, 2008-2013"
+parseShow(invalidRawShow)
+
+// 6.12
+def parseShow(rawShow: String): Option[TvShow] = {
+    for {
+        name <- extractName(rawShow)
+        yearStart <- extractYearStart(rawShow)
+        yearEnd <- extractYearEnd(rawShow)
+    } yield TvShow(name, yearStart, yearEnd)
+}
+
+def extractName(rawShow: String): Option[String]
+
+def extractYearStart(rawShow: String): Option[Int]
+
+def extractYearEnd(rawShow: String): Option[Int]
