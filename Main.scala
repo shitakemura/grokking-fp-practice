@@ -161,7 +161,7 @@
 //     movie <- bookAdaptations(author)
 // } yield s"You may like ${movie.title}, " + s"because you liked $author's ${book.title}"
 
-case class Point(x: Int, y: Int)
+// case class Point(x: Int, y: Int)
 
 // val xs = List(1)
 // val ys = List(-2, 7)
@@ -177,185 +177,185 @@ case class Point(x: Int, y: Int)
 //     y <- ys
 // } yield Point(x, y)
 
-case class Point3d(x: Int, y: Int, z: Int)
+// case class Point3d(x: Int, y: Int, z: Int)
 
-val xs = List(1)
-val ys = List(-2, 7)
-val zs = List(3, 4)
+// val xs = List(1)
+// val ys = List(-2, 7)
+// val zs = List(3, 4)
 
-for {
-    x <- xs
-    y <- ys
-    z <- zs
-} yield Point3d(x, y, z)
+// for {
+//     x <- xs
+//     y <- ys
+//     z <- zs
+// } yield Point3d(x, y, z)
 
-xs.flatMap(x =>
-    ys.flatMap(y =>
-        zs.map(z =>
-            Point3d(x, y, z)
-        )
-    )
-)
+// xs.flatMap(x =>
+//     ys.flatMap(y =>
+//         zs.map(z =>
+//             Point3d(x, y, z)
+//         )
+//     )
+// )
 
-// 5.19
+// // 5.19
 
-for {
-    a <- List[Int](1, 2)
-    b <- List[Int](10, 100)
-    c <- List[Double](0.5, 0.7)
-    d <- List[Int](3)
-} yield (a * b * c + d).toString + "km"
+// for {
+//     a <- List[Int](1, 2)
+//     b <- List[Int](10, 100)
+//     c <- List[Double](0.5, 0.7)
+//     d <- List[Int](3)
+// } yield (a * b * c + d).toString + "km"
 
-// 5.20
+// // 5.20
 
-case class Point(x: Int, y: Int)
-val points = List(Point(5, 2), Point(1, 1))
-val radiuses = List(2, 1)
+// case class Point(x: Int, y: Int)
+// val points = List(Point(5, 2), Point(1, 1))
+// val radiuses = List(2, 1)
 
-def isInside(point: Point, radius: Int): Boolean = {
-    radius * radius >= point.x * point.x + point.y * point.y
-}
+// def isInside(point: Point, radius: Int): Boolean = {
+//     radius * radius >= point.x * point.x + point.y * point.y
+// }
 
-for {
-    r <- radiuses
-    point <- points
-} yield s"$point is within a radius of $r: " + isInside(point, r).toString
+// for {
+//     r <- radiuses
+//     point <- points
+// } yield s"$point is within a radius of $r: " + isInside(point, r).toString
 
-for {
-    r <- radiuses
-    point <- points.filter(p => isInside(p, r))
-} yield s"$point is within a radius of $r"
+// for {
+//     r <- radiuses
+//     point <- points.filter(p => isInside(p, r))
+// } yield s"$point is within a radius of $r"
 
-for {
-    r <- radiuses
-    point <- points
-    if isInside(point, r)
-} yield s"$point is within a radius of $r"
+// for {
+//     r <- radiuses
+//     point <- points
+//     if isInside(point, r)
+// } yield s"$point is within a radius of $r"
 
-def insideFilter(point: Point, r: Int): List[Point] = {
-    if(isInside(point, r)) List(point) else List.empty
-}
+// def insideFilter(point: Point, r: Int): List[Point] = {
+//     if(isInside(point, r)) List(point) else List.empty
+// }
 
-for {
-    r <- radiuses
-    point <- points
-    inPoint <- insideFilter(point, r)
-} yield s"$inPoint is within a radius of $r"
+// for {
+//     r <- radiuses
+//     point <- points
+//     inPoint <- insideFilter(point, r)
+// } yield s"$inPoint is within a radius of $r"
 
-// 5.23
+// // 5.23
 
-case class Point(x: Int, y: Int)
-val points = List(Point(5, 2), Point(1, 1))
-val riskyRadiuses = List(-10, 0, 2)
+// case class Point(x: Int, y: Int)
+// val points = List(Point(5, 2), Point(1, 1))
+// val riskyRadiuses = List(-10, 0, 2)
 
-def isInside(point: Point, radius: Int): Boolean = {
-    radius * radius >= point.x * point.x + point.y * point.y
-}
+// def isInside(point: Point, radius: Int): Boolean = {
+//     radius * radius >= point.x * point.x + point.y * point.y
+// }
 
-for {
-    r <- riskyRadiuses
-    point <- points.filter(p => isInside(p, r))
-} yield s"$point is within a radius of $r"
+// for {
+//     r <- riskyRadiuses
+//     point <- points.filter(p => isInside(p, r))
+// } yield s"$point is within a radius of $r"
 
-for {
-    r <- riskyRadiuses.filter(r => r > 0)
-    point <- points.filter(p => isInside(p, r))
-} yield s"$point is within a radius of $r"
+// for {
+//     r <- riskyRadiuses.filter(r => r > 0)
+//     point <- points.filter(p => isInside(p, r))
+// } yield s"$point is within a radius of $r"
 
-for {
-    r <- riskyRadiuses
-    if r > 0
-    point <- points
-    if isInside(point, r)
-} yield s"$point is within a radius of $r"
+// for {
+//     r <- riskyRadiuses
+//     if r > 0
+//     point <- points
+//     if isInside(point, r)
+// } yield s"$point is within a radius of $r"
 
-def insideFilter(point: Point, radius: Int): List[Point] = {
-    if (isInside(point, radius)) List(point) else List.empty
-}
+// def insideFilter(point: Point, radius: Int): List[Point] = {
+//     if (isInside(point, radius)) List(point) else List.empty
+// }
 
-def validateRadius(radius: Int): List[Int] = {
-    if (radius > 0) List(radius) else List.empty
-}
+// def validateRadius(radius: Int): List[Int] = {
+//     if (radius > 0) List(radius) else List.empty
+// }
 
-for {
-    r <- riskyRadiuses
-    validateRadius <- validateRadius(r)
-    point <- points
-    inPoint <- insideFilter(point, validateRadius)
-} yield s"$point is within a radius of $r"
+// for {
+//     r <- riskyRadiuses
+//     validateRadius <- validateRadius(r)
+//     point <- points
+//     inPoint <- insideFilter(point, validateRadius)
+// } yield s"$point is within a radius of $r"
 
-// 5.27
+// // 5.27
 
-for {
-    greeting <- Set("Hello", "Hi there")
-    name <- Set("Alice", "Bob")
-} yield s"$greeting, $name!"
+// for {
+//     greeting <- Set("Hello", "Hi there")
+//     name <- Set("Alice", "Bob")
+// } yield s"$greeting, $name!"
 
-for {
-    a <- List(1, 2)
-    b <- Set(2, 1)
-} yield a * b
+// for {
+//     a <- List(1, 2)
+//     b <- Set(2, 1)
+// } yield a * b
 
-for {
-    a <- Set(1, 2)
-    b <- List(2, 1)
-} yield a * b
+// for {
+//     a <- Set(1, 2)
+//     b <- List(2, 1)
+// } yield a * b
 
-// 5.31
+// // 5.31
 
-case class Event(name: String, start: Int, end: Int)
+// case class Event(name: String, start: Int, end: Int)
 
-def parse(name: String, start: Int, end: Int): Event = {
-    if (name.size > 0 && end < 3000 && start <= end)
-        Event(name, start, end)
-    else
-        null
-}
+// def parse(name: String, start: Int, end: Int): Event = {
+//     if (name.size > 0 && end < 3000 && start <= end)
+//         Event(name, start, end)
+//     else
+//         null
+// }
 
-def parse(name: String, start: Int, end: Int): Option[Event] = {
-    if (name.size > 0 && end < 3000 && start <= end)
-        Some(Event(name, start, end))
-    else
-        None
-}
+// def parse(name: String, start: Int, end: Int): Option[Event] = {
+//     if (name.size > 0 && end < 3000 && start <= end)
+//         Some(Event(name, start, end))
+//     else
+//         None
+// }
 
-def validateName(name: String): Option[String] = {
-    if (name.size > 0) Some(name) else None
-}
+// def validateName(name: String): Option[String] = {
+//     if (name.size > 0) Some(name) else None
+// }
 
-def validateEnd(end: Int): Option[Int] = {
-    if (end < 3000) Some(end) else None
-}
+// def validateEnd(end: Int): Option[Int] = {
+//     if (end < 3000) Some(end) else None
+// }
 
-def validateStart(start: Int, end: Int): Option[Int] = {
-    if (start <= end) Some(start) else None
-}
+// def validateStart(start: Int, end: Int): Option[Int] = {
+//     if (start <= end) Some(start) else None
+// }
 
-def parse(name: String, start: Int, end: Int): Option[Event] = {
-    for {
-        validName <- validateName(name)
-        validEnd <- validateEnd(end)
-        validStart <- validateStart(start, end)
-    } yield Event(validName, validStart, validEnd)
-}
+// def parse(name: String, start: Int, end: Int): Option[Event] = {
+//     for {
+//         validName <- validateName(name)
+//         validEnd <- validateEnd(end)
+//         validStart <- validateStart(start, end)
+//     } yield Event(validName, validStart, validEnd)
+// }
 
-parse("Apollo Program", 1961, 1972)
-parse("", 1939, 1945)
+// parse("Apollo Program", 1961, 1972)
+// parse("", 1939, 1945)
 
-def validateLength(start: Int, end: Int, minLength: Int): Option[Int] = {
-    if (end - start >= minLength) Some(end - start) else None
-}
+// def validateLength(start: Int, end: Int, minLength: Int): Option[Int] = {
+//     if (end - start >= minLength) Some(end - start) else None
+// }
 
-def parseLongEvent(name: String, start: Int, end: Int, minLength: Int): Option[Event] = {
-    for {
-        validName <- validateName(name)
-        validEnd <- validateEnd(end)
-        validStart <- validateStart(start, end)
-        validLength <- validateLength(start, end, minLength)
-    } yield Event(validName, validStart, validEnd)
-}
+// def parseLongEvent(name: String, start: Int, end: Int, minLength: Int): Option[Event] = {
+//     for {
+//         validName <- validateName(name)
+//         validEnd <- validateEnd(end)
+//         validStart <- validateStart(start, end)
+//         validLength <- validateLength(start, end, minLength)
+//     } yield Event(validName, validStart, validEnd)
+// }
 
-parseLongEvent("Apollo Program", 1961, 1972, 10)
-parseLongEvent("World War 2", 1939, 1945, 10)
-parseLongEvent("", 1939, 1945, 10)
-parseLongEvent("Apollo Program", 1972, 1961, 10)
+// parseLongEvent("Apollo Program", 1961, 1972, 10)
+// parseLongEvent("World War 2", 1939, 1945, 10)
+// parseLongEvent("", 1939, 1945, 10)
+// parseLongEvent("Apollo Program", 1972, 1961, 10)
