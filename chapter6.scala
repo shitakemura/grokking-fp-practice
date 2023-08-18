@@ -22,3 +22,23 @@ def sortRawShows(rawShows: List[String]): List[TvShow] = {
     val tvShows = parseShows(rawShows)
     sortShows(tvShows)
 }
+
+def parseShows(rawShows: List[String]): List[TvShow] = {
+    rawShows.map(parseShow)
+}
+
+def parseShow(rawShow: String): TvShow = {
+    val bracketOpen = rawShow.indexOf('(')
+    val bracketClose = rawShow.indexOf(')')
+    val dash = rawShow.indexOf('-')
+
+    val name = rawShow.substring(0, bracketOpen).trim
+    val yearStart = Integer.parseInt(rawShow.substring(bracketOpen + 1, dash))
+    val yearEnd = Integer.parseInt(rawShow.substring(dash + 1, bracketClose))
+
+    TvShow(name, yearStart, yearEnd)
+}
+
+parseShow("Breaking Bad (2008-1013)")
+
+parseShows(rawShows)
