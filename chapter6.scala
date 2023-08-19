@@ -103,3 +103,30 @@ def extractYearEnd(rawShow: String): Option[Int] = {
         year <- yearStr.toIntOption
     } yield year
 }
+
+// 6.26
+case class TvShow(title: String, start: Int, end: Int)
+
+def extractSingleYear(rawShow: String): Option[Int] = {
+    val dash = rawShow.indexOf('-')
+    val bracketOpen = rawShow.indexOf('(')
+    val bracketClose = rawShow.indexOf(')')
+    for {
+        yearStr <- if (dash == -1 && bracketOpen != -1 && bracketClose > bracketOpen + 1)
+            Some(rawShow.substring(bracketOpen + 1, bracketClose))
+            else None
+        year <- yearStr.toIntOption
+    } yield year
+}
+
+def parseShow(rawShow: String): Option[TvShow] = {
+    for {
+        name <- extractName(rawShow)
+        yearStart <- extractYearStart(rawShow).orElse(extractSingleYear(rawShow))
+        yearEnd <- extractYearEnd(rawShow).orElse(extractSingleYear(rawShow))
+    } yield TvShow(name, yearStart, yearEnd)
+}
+
+parseShow("Chernobyl (2019)")
+parseShow("Breaking Bad (2008-2013)")
+parseShow("Mad Men (-2015)")
