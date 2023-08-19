@@ -77,3 +77,29 @@ def extractYearStart(rawShow: String): Option[Int] = {
         year <- yearStr.toIntOption
     } yield year
 }
+
+extractYearStart("Breaking Bad (2008-2013)")
+extractYearStart("Mad Men (-2015)")
+extractYearStart("(2002- N/A) The Wire")
+
+def extractName(rawShow: String): Option[String] = {
+    val bracketOpen = rawShow.indexOf('(')
+    for {
+        name <- if (bracketOpen > 0)
+            Some(rawShow.substring(0, bracketOpen).trim)
+        else
+            None
+    } yield name
+}
+
+def extractYearEnd(rawShow: String): Option[Int] = {
+    val dash = rawShow.indexOf('-')
+    val bracketClose = rawShow.indexOf(')')
+    for {
+        yearStr <- if (dash != -1 && dash < bracketClose)
+            Some(rawShow.substring(dash + 1, bracketClose))
+        else
+            None
+        year <- yearStr.toIntOption
+    } yield year
+}
