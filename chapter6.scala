@@ -170,3 +170,17 @@ def extractSingleYearIfNameExists(rawShow: String): Option[Int] = {
 def extractAnyYearIfNameExists(rawShow: String): Option[Int] = {
     extractName(rawShow).flatMap(_ => extractAnyYear(rawShow))
 }
+
+// 6.33
+Some(7).toList
+None.toList
+
+def parseShows(rawShows: List[String]): List[TvShow] = {
+    // rawShows
+    //     .map(parseShow)
+    //     .map(_.toList)
+    //     .flatten
+    rawShows
+        .map(parseShow)
+        .flatMap(_.toList)
+}
