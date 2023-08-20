@@ -184,3 +184,17 @@ def parseShows(rawShows: List[String]): List[TvShow] = {
         .map(parseShow)
         .flatMap(_.toList)
 }
+
+// 6.35
+
+val rawShows = List("Breaking Bad (2008-1013)", "The Wire 2002 2008", "Mad Men (2007-2015)")
+parseShows(rawShows)
+
+// 6.36
+
+def addOrResign(parsedShows: Option[List[TvShow]], newParsedShows: Option[TvShow]): Option[List[TvShow]] = {
+    for {
+        shows <- parsedShows
+        parsedShow <- newParsedShow
+    } yield shows.appended(parsedShow)
+}
