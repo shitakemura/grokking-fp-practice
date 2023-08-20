@@ -130,3 +130,43 @@ def parseShow(rawShow: String): Option[TvShow] = {
 parseShow("Chernobyl (2019)")
 parseShow("Breaking Bad (2008-2013)")
 parseShow("Mad Men (-2015)")
+
+// 6.28
+
+val seven: Option[Int] = Some(7)
+val eight: Option[Int] = Some(8)
+val none: Option[Int] = None
+
+seven.orElse(eight)
+none.orElse(eight)
+seven.orElse(none)
+none.orElse(none)
+
+val chernobyl = "Chelnobyl (2019)"
+extractYearStart(chernobyl)
+extractSingleYear(chernobyl)
+extractYearStart(chernobyl).orElse(extractSingleYear(chernobyl))
+extractYearStart(chernobyl).orElse(extractSingleYear("not-a-year"))
+
+def extractSingleYearOrYearEnd(rawShow: String): Option[Int] = {
+    extractSingleYear(rawShow).orElse(extractYearEnd(rawShow))
+}
+
+def extractAnyYear(rawShow: String): Option[Int] = {
+    extractYearStart(rawShow).orElse(extractYearEnd(rawShow)).orElse(extractSingleYear(rawShow))
+}
+
+def extractSingleYearIfNameExists(rawShow: String): Option[Int] = {
+    for {
+        name <- extractName(rawShow)
+        year <- extractSingleYear(rawShow)
+    } yield year
+}
+
+// def extractSingleYearIfNameExists(rawShow: String): Option[Int] = {
+//     extractName(rawShow).flatMap(_ => extractSingleYear(rawShow))
+// }
+
+def extractAnyYearIfNameExists(rawShow: String): Option[Int] = {
+    extractName(rawShow).flatMap(_ => extractAnyYear(rawShow))
+}
