@@ -217,3 +217,18 @@ def parseShows(rawShows: List[String]): Option[List[TvShow]] = {
         .map(parseShow)
         .foldLeft(initialResult)(addOrResign)
 }
+
+// 6.43
+def extractName(show: String): Either[String, String] = {
+    val bracketOpen = show.indexOf('(')
+    if (bracketOpen > 0)
+        Right(show.substring(0, bracketOpen).trim)
+    else
+        Left(s"Can't extract name from $show")
+}
+
+extractName("(2022)")
+extractName("test (2022)")
+
+// def parseShows(rawShows: List[String]): Option[List[TvShow]]
+def parseShows(rawShows: List[String]): Either[String, List[TvShow]]
