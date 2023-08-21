@@ -232,3 +232,34 @@ extractName("test (2022)")
 
 // def parseShows(rawShows: List[String]): Option[List[TvShow]]
 def parseShows(rawShows: List[String]): Either[String, List[TvShow]]
+
+// 6.46
+
+def extractYearStart(rawShow: String): Either[String, Int] = {
+    val bracketOpen = rawShow.indexOf('(')
+    val dash = rawShow.indexOf('-')
+    val yearStrEither = if (bracketOpen != -1 && dash > bracketOpen + 1)
+                            Right(rawShow.substring(bracketOpen + 1, dash))
+                        else
+                            Left(s"Can't extract start year from $rawShow")
+    yearStrEither.map(
+        yearStr => yearStr.toIntOption.toRight(s"Can't parse $yearStr")
+    ).flatten
+}
+
+def extractYearStart(rawShow: String): Either[String, Int] = {
+    val bracketOpen = rawShow.indexOf('(')
+    val dash = rawShow.indexOf('-')
+    for {
+        yearStr <- if (bracketOpen != -1 && dash > bracketOpen + 1)
+                       Right(rawShow.substring(bracketOpen + 1, dash))
+                   else
+                       Left(s"Can't extract start year from $rawShow")
+        year <- yearStr.toIntOption.toRight(s"Can't parse $yearStr")
+    } yield year
+}
+
+extractYearStart("The Wire (2002-2008)")
+extractYearStart("The Wire (-2008)")
+extractYearStart("The wire (oops-2008)")
+extractYearStart("The Wire (2002-)")
