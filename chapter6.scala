@@ -172,29 +172,48 @@ def extractAnyYearIfNameExists(rawShow: String): Option[Int] = {
 }
 
 // 6.33
-Some(7).toList
-None.toList
+// Some(7).toList
+// None.toList
 
-def parseShows(rawShows: List[String]): List[TvShow] = {
-    // rawShows
-    //     .map(parseShow)
-    //     .map(_.toList)
-    //     .flatten
-    rawShows
-        .map(parseShow)
-        .flatMap(_.toList)
-}
+// def parseShows(rawShows: List[String]): List[TvShow] = {
+//     // rawShows
+//     //     .map(parseShow)
+//     //     .map(_.toList)
+//     //     .flatten
+//     rawShows
+//         .map(parseShow)
+//         .flatMap(_.toList)
+// }
 
 // 6.35
 
-val rawShows = List("Breaking Bad (2008-1013)", "The Wire 2002 2008", "Mad Men (2007-2015)")
-parseShows(rawShows)
+// val rawShows = List("Breaking Bad (2008-1013)", "The Wire 2002 2008", "Mad Men (2007-2015)")
+// parseShows(rawShows)
 
 // 6.36
 
-def addOrResign(parsedShows: Option[List[TvShow]], newParsedShows: Option[TvShow]): Option[List[TvShow]] = {
+def addOrResign(parsedShows: Option[List[TvShow]], newParsedShow: Option[TvShow]): Option[List[TvShow]] = {
     for {
         shows <- parsedShows
         parsedShow <- newParsedShow
     } yield shows.appended(parsedShow)
+}
+
+// 6.38
+
+// def parseShows(rawShows: List[String]): List[TvShow] = {
+//     rawShows
+//         .map(parseShow)
+//         .map(_.toList)
+//         .flatten
+// }
+
+// parseShows(List("Chernobyl [2019]", "Breaking Bad (2008-2013)"))
+// parseShows(List("Chernobyl [2019]", "Breaking Bad"))
+
+def parseShows(rawShows: List[String]): Option[List[TvShow]] = {
+    val initialResult: Option[List[TvShow]] = Some(List.empty)
+    rawShows
+        .map(parseShow)
+        .foldLeft(initialResult)(addOrResign)
 }
