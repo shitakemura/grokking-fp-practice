@@ -263,3 +263,39 @@ extractYearStart("The Wire (2002-2008)")
 extractYearStart("The Wire (-2008)")
 extractYearStart("The wire (oops-2008)")
 extractYearStart("The Wire (2002-)")
+
+// 6.47
+def extractName(rawShow: String): Either[String, String] = {
+    val bracketOpen = rawShow.indexOf('(')
+    for {
+        name <- if (bracketOpen > 0)
+                    Right(rawShow.substring(0, bracketOpen))
+                else
+                    Left(s"Can't extract name from $rawShow")
+    } yield name
+}
+
+def extractYearEnd(rawShow: String): Either[String, Int] = {
+    val dash = rawShow.indexOf('-')
+    val bracketClose = rawShow.indexOf(')')
+    for {
+        yearStr <- if (dash != -1 && bracketClose > dash + 1)
+                       Right(rawShow.substring(dash + 1, bracketClose))
+                   else
+                       Left(s"Can't extract end year from $rawShow")
+        year <- yearStr.toIntOption.toRight(s"Can't parse $yearStr")
+    } yield year
+}
+
+def extractSingleYear(rawShow: String): Either[String, Int] = {
+    val dash = rawShow.indexOf('-')
+    val bracketOpen = rawShow.indexOf('(')
+    val bracketClose = rawShow.indexOf(')')
+    for {
+        yearStr <- if (dash != -1 && bracketOpen != -1 && bracketClose > bracketOpen + 1)
+                       Right(rawShow.substring(bracketOpen + 1, bracketClose))
+                   else
+                       Left(s"Can't extract single year from $rawShow")
+        year <- yearStr.toIntOption.toRight(s"Can't parse $yearStr")
+    } yield year
+}
