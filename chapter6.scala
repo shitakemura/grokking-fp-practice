@@ -292,10 +292,43 @@ def extractSingleYear(rawShow: String): Either[String, Int] = {
     val bracketOpen = rawShow.indexOf('(')
     val bracketClose = rawShow.indexOf(')')
     for {
-        yearStr <- if (dash != -1 && bracketOpen != -1 && bracketClose > bracketOpen + 1)
+        yearStr <- if (dash == -1 && bracketOpen != -1 && bracketClose > bracketOpen + 1)
                        Right(rawShow.substring(bracketOpen + 1, bracketClose))
                    else
                        Left(s"Can't extract single year from $rawShow")
         year <- yearStr.toIntOption.toRight(s"Can't parse $yearStr")
     } yield year
 }
+
+// 6.48
+def parseShow(rawShow: String): Either[String, TvShow] = {
+    for {
+        name <- extractName(rawShow)
+        yearStart <- extractYearStart(rawShow).orElse(extractSingleYear(rawShow))
+        yearEnd <- extractYearEnd(rawShow).orElse(extractSingleYear(rawShow))
+    } yield TvShow(name, yearStart, yearEnd)
+}
+
+parseShow("The Wire (-)")
+parseShow("The Wire (oops)")
+parseShow("(2002-2008)")
+parseShow("The Wire (2002-2008)")
+
+
+def addOrResign(parsedShows: Either[String, List[TvShow]], newParsedShow: Either[String, TvShow]): Either[String, List[TvShow]] = {
+    for {
+        shows <- parsedShows
+        parsedShow <- newParsedShow
+    } yield shows.appended(parsedShow)
+}
+
+def parseShows(rawShows: List[String]): Either[String, List[TvShow]] = {
+    val initialResult: Either[String, List[TvShow]] = Right(List.empty)
+    rawShows
+        .map(parseShow)
+        .foldLeft(initialResult)(addOrResign)
+}
+
+parseShows(List("The Wire (2002-2008)", "[2019]"))
+parseShows(List("The Wire (-)", "Chernobyl (2009)"))
+parseShows(List("The Wire (2002-2008)", "Chernobyl (2019)"))
