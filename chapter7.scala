@@ -41,42 +41,92 @@
 
 // 7.9
 
+// object model {
+//     opaque type Location = String
+
+//     object Location {
+//         def apply(value: String): Location = value
+//         extension(a: Location) def name: String = a
+//     }
+// }
+
+// import model._
+// val us: Location = Location("U.S")
+
+// 7.10
+// case class Artist(name: String, genre: String, origin: Location,
+//     yearsActiveStart: Int, isActive: Boolean, yearsActiveEnd: Int)
+
+// Artist("Metallica", "Heavy Metal", Location("U.S."), 1981, true, 0)
+// Artist(Location("U.S."), "Metallica", "Heavy Metal", 1981, true, 0)
+// Artist(Location("U.S."), "Heavy Metal", "Metallica", 1981, true, 0)
+
+// def searchArtists(artists: List[Artist], genres: List[String], locations: List[String],
+//     searchByActiveYears: Boolean, activeAfter: Int, activeBefore: Int): List[Artist] = {
+//         artists.filter(artist =>
+//             (genres.isEmpty || genres.contains(artist.genre)) && 
+//             (locations.isEmpty || locations.contains(artist.origin.name)) &&
+//             (!searchByActiveYears || (artist.isActive ||
+//                 artist.yearsActiveEnd >= activeAfter &&
+//                 (artist.yearsActiveStart <= activeBefore))))
+//     }
+
+// val artists = List(
+//     Artist("Metallica", "Heavy Metal", Location("U.S."), 1981, true, 0),
+//     Artist("Led Zeppelin", "Hard Rock", Location("England"), 1968, false, 1980),
+//     Artist("Bee Gees", "Pop", Location("England"), 1958, false, 2003)
+// )
+
+// searchArtists(artists, List("Pop"), List("England"), true, 1950, 2022)
+// searchArtists(artists, List.empty, List("England"), true, 1950, 2022)
+// searchArtists(artists, List.empty, List.empty, true, 1950, 1979)
+
+// 7.11
+
+
 object model {
     opaque type Location = String
-
     object Location {
         def apply(value: String): Location = value
         extension(a: Location) def name: String = a
     }
+
+    opaque type Genre = String
+    object Genre {
+        def apply(value: String): Genre = value
+        extension(a: Genre) def name: String = a
+    }
+
+    opaque type YearsActiveStart = Int
+    object YearsActiveStart {
+        def apply(value: Int): YearsActiveStart = value
+        extension(a: YearsActiveStart) def value: Int = a
+    }
+
+    opaque type YearsActiveEnd = Int
+    object YearsActiveEnd {
+        def apply(value: Int): YearsActiveEnd = value
+        extension(a: YearsActiveEnd) def value: Int = a
+    }
 }
 
 import model._
-val us: Location = Location("U.S")
-
-// 7.10
-case class Artist(name: String, genre: String, origin: Location,
-    yearsActiveStart: Int, isActive: Boolean, yearsActiveEnd: Int)
-
-Artist("Metallica", "Heavy Metal", Location("U.S."), 1981, true, 0)
-Artist(Location("U.S."), "Metallica", "Heavy Metal", 1981, true, 0)
-Artist(Location("U.S."), "Heavy Metal", "Metallica", 1981, true, 0)
+case class Artist(
+    name: String,
+    genre: Genre,
+    origin: Location,
+    yearsActiveStart: YearsActiveStart,
+    isActive: Boolean,
+    yearsActiveEnd: YearsActiveEnd
+)
 
 def searchArtists(artists: List[Artist], genres: List[String], locations: List[String],
     searchByActiveYears: Boolean, activeAfter: Int, activeBefore: Int): List[Artist] = {
         artists.filter(artist =>
-            (genres.isEmpty || genres.contains(artist.genre)) && 
+            (genres.isEmpty || genres.contains((artist.genre.name)) &&
             (locations.isEmpty || locations.contains(artist.origin.name)) &&
             (!searchByActiveYears || (artist.isActive ||
-                artist.yearsActiveEnd >= activeAfter &&
-                (artist.yearsActiveStart <= activeBefore))))
+                artist.yearsActiveEnd.value >= activeAfter) &&
+                (artist.yearsActiveStart.value <= activeBefore))
+            ))
     }
-
-val artists = List(
-    Artist("Metallica", "Heavy Metal", Location("U.S."), 1981, true, 0),
-    Artist("Led Zeppelin", "Hard Rock", Location("England"), 1968, false, 1980),
-    Artist("Bee Gees", "Pop", Location("England"), 1958, false, 2003)
-)
-
-searchArtists(artists, List("Pop"), List("England"), true, 1950, 2022)
-searchArtists(artists, List.empty, List("England"), true, 1950, 2022)
-searchArtists(artists, List.empty, List.empty, true, 1950, 1979)
