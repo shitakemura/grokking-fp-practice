@@ -38,7 +38,18 @@ def wasArtistActive(artist: Artist, yearStart: Int, yearEnd: Int): Boolean = {
         case YearsActive.StillActive(since) => since <= yearEnd
         case YearsActive.ActiveBetween(start, end) => start <= yearEnd && end >= yearStart
     }
-        
-    
 }
 
+// 7.29
+def activeLength(artist: Artist, currentYear: Int): Int = {
+    artist.yearsActive match {
+        case YearsActive.StillActive(since) => currentYear - since
+        case YearsActive.ActiveBetween(start, end) => end - start
+    }
+}
+
+val my = activeLength(Artist("Metallica", HeavyMetal, Location("U.S."), 
+    YearsActive.StillActive(1981)), 2022)
+
+val ly = activeLength(Artist("Led Zeppelin", HardRock, Location("England"), 
+    YearsActive.ActiveBetween(1958, 2003)), 2022)
