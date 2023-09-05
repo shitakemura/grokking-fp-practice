@@ -13,3 +13,9 @@ def rankedWords(wordScore: String => Int, words: List[String]): List[String] = {
 }
 
 val res = rankedWords(w => score(w) + bonus(w), words)
+
+// 4.22
+
+def penalty(word: String): Int = if (word.contains("s")) 7 else 0
+
+val resWithPenalty = rankedWords(w => score(w) + bonus(w) - penalty(w), words)
