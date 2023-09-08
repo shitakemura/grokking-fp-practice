@@ -1,4 +1,3 @@
-#### grokking functional programming practice
+## grokking functional programming practice
 
-- sbt console
-- :reset
+なっとく! 関数型プログラミング
