@@ -15,3 +15,13 @@ def cumulativeScore(wordScore: String => Int, words: List[String]): Int = {
 }
 
 val res = cumulativeScore(w => score(w) + bonus(w) - penalty(w), List("rust", "java"))
+
+// 4.56
+
+val res1 = List(5, 1, 2, 4, 100).foldLeft(0)((total, num) => total + num)
+
+val res2 = List("scala", "rust", "ada").foldLeft(0)((total, word) => total + word.length)
+
+val res3 = List("scala", "haskell", "rust", "ada").foldLeft(0)((total, word) => total + word.length - word.replaceAll("s", "").length)
+
+val res4 = List(5, 1, 2, 4, 15).foldLeft(Int.MinValue)((max, num) => if (max < num) num else max)
