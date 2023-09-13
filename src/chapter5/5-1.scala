@@ -19,7 +19,7 @@ def bookAdaptations(author: String): List[Movie] = {
     else List.empty
 }
 
-def recommendationFeed(books: List[Book]) = ???
+// def recommendationFeed(books: List[Book]) = ???
 
 // 5.4
 
