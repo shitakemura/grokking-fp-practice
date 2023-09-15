@@ -16,3 +16,49 @@ val res19 = for {
     d <- List[Int](3)
 } yield (a * b * c + d).toString + "km"
 
+// 5.20
+
+case class Point(x: Int, y: Int)
+
+val points = List(Point(5, 2), Point(1, 1))
+val radiuses = List(2, 1)
+
+def isInside(point: Point, radius: Int): Boolean = {
+    radius * radius >= point.x * point.x + point.y * point.y
+}
+
+val res21_1 = for {
+    r <- radiuses
+    point <- points
+} yield s"$point is within a radius of $r: " + isInside(point, r).toString
+
+val res21_2 = for {
+    r <- radiuses
+    point <- points.filter(p => isInside(p, r))
+} yield s"$point is within a radius of $r"
+
+// 5.22
+
+val points = List(Point(5, 2), Point(1, 1))
+val radiuses = List(2, 1)
+
+val res22_1 = for {
+    r <- radiuses
+    point <- points.filter(p => isInside(p, r))
+} yield s"$point is within a radius of $r"
+
+val res22_2 = for {
+    r <- radiuses
+    point <- points
+    if isInside(point, r)
+} yield s"$point is within a radius of $r"
+
+def insideFilter(point: Point, r: Int): List[Point] = {
+    if (isInside(point, r)) List(point) else List.empty
+}
+
+val res22_3 = for {
+    r <- radiuses
+    point <- points
+    inPoint <- insideFilter(point, r)
+} yield s"$inPoint in within a radius of $r"
