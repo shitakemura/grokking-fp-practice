@@ -13,3 +13,27 @@
 case class TvShow(name: String, start: Int, end: Int)
 
 def sortShows(shows: List[TvShow]): List[TvShow] = ???
+
+// 6.4
+
+def sortShows(shows: List[TvShow]): List[TvShow] = {
+    shows
+        .sortBy(tvShow => tvShow.end - tvShow.start)
+        .reverse
+}
+
+val shows = List(TvShow("Breaking Bad", 2008, 2013),
+                 TvShow("The Wire", 2002, 2008),
+                 TvShow("Mad Men", 2007, 2015),
+            )
+
+val res6_4 = sortShows(shows)
+
+// 6.6
+
+def parseShows(rawShows: List[String]): List[TvShow] = ???
+
+def sortRawShows(rawShows: List[String]): List[TvShow] = {
+    val tvShows = parseShows(rawShows)
+    sortShows(tvShows)
+}
