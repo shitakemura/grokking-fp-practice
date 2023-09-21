@@ -42,3 +42,21 @@ val res6_28_1 = seven.orElse(eight)
 val res6_28_2 = none.orElse(eight)
 val res6_28_3 = seven.orElse(none)
 val res6_28_4 = none.orElse(none)
+
+// 6.29
+
+def extractSingleYearOrYearEnd(rawShow: String): Option[Int] = {
+    extractSingleYear(rawShow).orElse(extractYearEnd(rawShow))
+}
+
+def extractAnyYear(rawShow: String): Option[Int] = {
+    extractYearStart(rawShow).orElse(extractYearEnd(rawShow)).orElse(extractSingleYear(rawShow))
+}
+
+def extractSingleYearIfNameExists(rawShow: String): Option[Int] = {
+    extractName(rawShow).flatMap(name => extractSingleYear(rawShow))
+}
+
+def extractAnyYearIfNameExists(rawShow: String): Option[Int] = {
+    extractName(rawShow).flatMap(name => extractAnyYear(rawShow))
+}
