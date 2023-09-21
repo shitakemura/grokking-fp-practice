@@ -24,3 +24,21 @@ def extractSingleYear(rawShow: String): Option[Int] = {
 val res6_26_1 = parseShow("Chernobyl (2019)")
 val res6_26_2 = parseShow("Breaking Bad (2008-2013)")
 val res6_26_3 = parseShow("Mad Men (-2015)")
+
+// 6.27
+
+// 合成できない検査例外と合成できるOption
+
+// 関数と値はうまく合成できる
+// 命令型のコードはうまく合成できない
+
+// 6.28
+
+val seven: Option[Int] = Some(7)
+val eight: Option[Int] = Some(8)
+val none: Option[Int] = None
+
+val res6_28_1 = seven.orElse(eight)
+val res6_28_2 = none.orElse(eight)
+val res6_28_3 = seven.orElse(none)
+val res6_28_4 = none.orElse(none)
