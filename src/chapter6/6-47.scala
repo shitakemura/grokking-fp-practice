@@ -49,3 +49,19 @@ val res6_48_1 = parseShowWithEither("The Wire (-)")
 val res6_48_2 = parseShowWithEither("The Wire (oops)")
 val res6_48_3 = parseShowWithEither("(2002-2008)")
 val res6_48_4 = parseShowWithEither("The Wire (2002-2008)")
+
+// 6.49
+
+def addOrResignWithEither(parsedShows: Either[String, List[TvShow]], newParsedShow: Either[String, TvShow]): Either[String, List[TvShow]] = {
+    for {
+        shows <- parsedShows
+        parsedShow <- newParsedShow
+    } yield shows.appended(parsedShow)
+}
+
+def parseShowsWithEither(rawShow: List[String]): Either[String, List[TvShow]] = {
+    val initialResult: Either[String, List[TvShow]] = Right(List.empty)
+    rawShow
+        .map(parseShowWithEither)
+        .foldLeft(initialResult)(addOrResignWithEither)
+}

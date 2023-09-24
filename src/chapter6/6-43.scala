@@ -15,7 +15,7 @@ def extractNameWithOption(rawShow: String): Option[String] = {
         None
 }
 
-def extractNameWithEither(rawShow: String): Either[String, String] = {
+def extractNameWithE(rawShow: String): Either[String, String] = {
     val bracketOpen = rawShow.indexOf('(')
     if (bracketOpen > 0)
         Right(rawShow.substring(0, bracketOpen).trim)
@@ -29,7 +29,7 @@ def extractNameWithEither(rawShow: String): Either[String, String] = {
 def parseShowsWithOption(rawShows: List[String]): Option[List[TvShow]] = ???
 
 // Right[List[TvShow]] or Left[String]を返す
-def parseShowsWithEither(rasShows: List[String]): Either[String, List[TvShow]] = ???
+def parseShowsWithE(rasShows: List[String]): Either[String, List[TvShow]] = ???
 
 // 6.46
 
@@ -48,7 +48,7 @@ def extractYearStart(rawShow: String): Either[String, Int] = {
             ).flatten
 }
 
-def extractYearStartWithFor(rawShow: String): Either[String, Int] = {
+def extractYearStartWithEither(rawShow: String): Either[String, Int] = {
     val bracketOpen = rawShow.indexOf('(')
     val dash = rawShow.indexOf('-')
     for {
@@ -59,7 +59,7 @@ def extractYearStartWithFor(rawShow: String): Either[String, Int] = {
     } yield year
 }
 
-val res6_46_1 = extractYearStartWithFor("The Wire (2002-2008)")
-val res6_46_2 = extractYearStartWithFor("The Wire (-2008)")
-val res6_46_3 = extractYearStartWithFor("The Wire (oops-2008)")
-val res6_46_4 = extractYearStartWithFor("The Wire (2002-)")
+val res6_46_1 = extractYearStartWithEither("The Wire (2002-2008)")
+val res6_46_2 = extractYearStartWithEither("The Wire (-2008)")
+val res6_46_3 = extractYearStartWithEither("The Wire (oops-2008)")
+val res6_46_4 = extractYearStartWithEither("The Wire (2002-)")
