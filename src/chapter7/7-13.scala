@@ -41,3 +41,57 @@ def searchArtists(
             (artist.yearsActiveStart <= activeBefore)))
         )
 }
+
+// 7.18
+
+case class User(name: String, city: Option[String], favoriteArtists: List[String])
+
+val users = List(
+    User("Alice", Some("Melbourne"), List("Bee Gees")),
+    User("Bob", Some("Lagos"), List("Bee Gees")),
+    User("Eve", Some("Tokyo"), List.empty),
+    User("Mallory", None, List("Metallica", "Bee Gees")),
+    User("Trent", Some("Buenos Aires"), List("Led Zeppelin")),    
+)
+
+// forall
+def f1(users: List[User]): List[User] = {
+    users.filter(_.city.forall(_ == "Melbourne"))
+}
+
+val res_f1 = f1(users).map(_.name)
+
+// contains
+def f2(users: List[User]): List[User] = {
+    users.filter(_.city.contains("Lagos"))
+}
+
+val res_f2 = f2(users).map(_.name)
+
+// contains
+def f3(users: List[User]): List[User] = {
+    users.filter(_.favoriteArtists.contains("Bee Gees"))
+}
+
+val res_f3 = f3(users).map(_.name)
+
+// exists, startsWith
+def f4(users: List[User]): List[User] = {
+    users.filter(_.city.exists(_.startsWith("T")))
+}
+
+val res_f4 = f4(users).map(_.name)
+
+// forall
+def f5(users: List[User]): List[User] = {
+    users.filter(_.favoriteArtists.forall(_.length >= 8))
+}
+
+val res_f5 = f5(users).map(_.name)
+
+// exists, startWith
+def f6(users: List[User]): List[User] = {
+    users.filter(_.favoriteArtists.exists(_.startsWith("M")))
+}
+
+val res_f6 = f6(users).map(_.name)
