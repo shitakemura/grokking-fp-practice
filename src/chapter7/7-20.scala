@@ -36,3 +36,23 @@ def searchArtists(
             (artist.yearsActive.start <= activeBefore)))
         )
 }
+
+// 7.21
+
+// 直和型
+
+enum MusicGenre {
+    case HeavyMetal
+    case Pop
+    case HardRock
+}
+
+import MusicGenre._
+val genre: MusicGenre = Pop
+val x: MusicGenre = HeavyMetal
+
+case class Artist(name: String, genre: MusicGenre, origin: Location, yearsActive: PeriodInYears)
+
+val artists = List(
+    Artist("Metallica", HeavyMetal, Location("U.S."), PeriodInYears(1981, None))
+)
