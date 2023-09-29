@@ -33,3 +33,26 @@ val artists = List(
     Artist("Metallica", HeavyMetal, Location("U.S."), StillActive(1981)),
     Artist("Led Zeppelin", HardRock, Location("England"), ActiveBetween(1968, 1980))
 )
+
+// 7.26
+
+def wasArtistActive(artist: Artist, yearStart: Int, yearEnd: Int): Boolean = {
+    artist.yearsActive match {
+        case StillActive(since) => since <= yearEnd
+        case ActiveBetween(start, end) => start <= yearEnd && end >= yearStart
+    }
+}
+
+def searchArtists(
+    artists: List[Artist], 
+    genres: List[String], 
+    locations: List[String], 
+    searchByActiveYears: Boolean, 
+    activeAfter: Int, 
+    activeBefore: Int) = {
+        artists.filter(artist =>
+            (genres.isEmpty || genres.contains(artist.genre)) &&
+            (locations.isEmpty || locations.contains(artist.origin)) &&
+            (!searchByActiveYears || (wasArtistActive(artist, activeAfter, activeBefore)))    
+        )
+}
