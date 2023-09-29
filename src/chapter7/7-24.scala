@@ -56,3 +56,16 @@ def searchArtists(
             (!searchByActiveYears || (wasArtistActive(artist, activeAfter, activeBefore)))    
         )
 }
+
+// 7.29
+
+def activeLength(artist: Artist, currentYear: Int): Int = {
+    artist.yearsActive match {
+        case StillActive(since) => currentYear - since
+        case ActiveBetween(start, end) => end - start
+    }
+}
+
+val res7_29_1 = activeLength(Artist("Metallica", HeavyMetal, Location("U.S."), StillActive(1981)), 2022)
+val res7_29_2 = activeLength(Artist("Led Zeppelin", HardRock, Location("England"), ActiveBetween(1968, 1980)), 2022)
+val res7_29_3 = activeLength(Artist("Bee Gees", Pop, Location("England"), ActiveBetween(1958, 2003)), 2022)
