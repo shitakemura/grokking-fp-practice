@@ -56,3 +56,11 @@ case class Artist(name: String, genre: MusicGenre, origin: Location, yearsActive
 val artists = List(
     Artist("Metallica", HeavyMetal, Location("U.S."), PeriodInYears(1981, None))
 )
+
+// 7.23
+
+enum YearsActive {
+    case StillActive(since: Int)
+    case ActiveBetween(start: Int, end: Int)
+}
+
